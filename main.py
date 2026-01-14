@@ -2,6 +2,7 @@ from logging import exception
 
 import speech_recognition as sr
 import pyttsx3
+import webbrowser
 
 engine = pyttsx3.init()
 
@@ -11,9 +12,10 @@ def say(text):
 def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        r.pause_threshold=1
+        r.pause_threshold=0.8 #default
         audio = r.listen(source)
         try:
+            print("Recognizing...")
             query=r.recognize_google(audio,language='en-in')
             print(f"user said: {query}")
             return query
@@ -25,6 +27,12 @@ if __name__ == "__main__":
     say("Hello, I love mommy")
     print("listening...")
     query=takecommand()
-    say(query)
+    sites=[["youtube","https://www.youtube.com"],["wikipedia","https://www.wikipedia.com"]]#making lilo to do different task
+    for site in sites:
+        if f"open {site[0]}".lower() in query.lower():
+            say(f"openning {site[0]} sir..")
+            webbrowser.open(site[1])
+
+    #say(query)
 
 
