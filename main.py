@@ -1,8 +1,10 @@
 from logging import exception
+from time import strftime
 
 import speech_recognition as sr
 import pyttsx3
 import webbrowser
+import datetime
 
 engine = pyttsx3.init()
 
@@ -32,6 +34,9 @@ if __name__ == "__main__":
         if f"open {site[0]}".lower() in query.lower():
             say(f"openning {site[0]} sir..")
             webbrowser.open(site[1])
+    if "the time" in query:
+        strftime= datetime.datetime.now().strftime("%H:%M:%S")
+        say(f"the time is {strftime}")
 
     #say(query)
 
